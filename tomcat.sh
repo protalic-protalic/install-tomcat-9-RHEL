@@ -41,8 +41,8 @@ if [ ! -d "/opt/tomcat" ]; then
     # Save the current directory
     original_dir=$(pwd)
     cd /tmp
-    wget https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.89/bin/apache-tomcat-9.0.89.tar.gz &> /dev/null
-    sudo tar xf apache-tomcat-9.0.89.tar.gz -C /opt/tomcat --strip-components=1
+    wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.105/bin/apache-tomcat-9.0.105.tar.gz &> /dev/null
+    sudo tar xf apache-tomcat-9.0.105.tar.gz -C /opt/tomcat --strip-components=1
     sudo chown -R tomcat: /opt/tomcat
     sudo chmod -R 755 /opt/tomcat
 

@@ -5,7 +5,10 @@ This is script for installing Tomcat 9 in your Redhat machine with manager and h
 **cd;sudo yum install git -y &> /dev/null;git clone https://github.com/protalic-protalic/install-tomcat-9-RHEL.git &> /dev/null;cd install_tomcat_RHEL;bash tomcat.sh**
 
 
+
+
 Logins for manager and Hostmanager is:
 
 **User: admin
+
 Password: admin**

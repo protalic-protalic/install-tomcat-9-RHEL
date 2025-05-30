@@ -19,7 +19,7 @@ get_public_ip() {
 if ! java -version 2>&1 | grep -q "17.0.12"; then
     echo "This may take some time as necessary packages getting installed. Please wait..."
     if ! sudo yum install java-17-openjdk-devel -y &> /dev/null; then
-        echo "sudo yum update -y &> /dev/null;sudo yum install wget -y &> /dev/null;sudo mkdir /opt/java-17 &> /dev/null;wget https://download.java.net/java/GA/jdk17/0d483333a00540d886896bac774ff48b/35/GPL/openjdk-17_linux-x64_bin.tar.gz &> /dev/null;sudo tar xf  openjdk-17_linux-x64_bin.tar.gz -C /opt/java-17/ --strip-components=1 &> /dev/null;export JAVA_HOME=/opt/java-17 &> /dev/null;export PATH=$JAVA_HOME/bin:$PATH  &> /dev/null; echo "Java JDK 17 installed. Here is the version details:"; java --version
+        sudo yum update -y &> /dev/null;sudo yum install wget -y &> /dev/null;sudo mkdir /opt/java-17 &> /dev/null;wget https://download.java.net/java/GA/jdk17/0d483333a00540d886896bac774ff48b/35/GPL/openjdk-17_linux-x64_bin.tar.gz &> /dev/null;sudo tar xf  openjdk-17_linux-x64_bin.tar.gz -C /opt/java-17/ --strip-components=1 &> /dev/null;export JAVA_HOME=/opt/java-17 &> /dev/null;export PATH=$JAVA_HOME/bin:$PATH  &> /dev/null; echo "Java JDK 17 installed. Here is the version details:"; java --version
     fi
 else
     echo "Java 17 is already installed." &> /dev/null

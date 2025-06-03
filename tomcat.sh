@@ -39,25 +39,25 @@ if ! java -version 2>&1 | grep -q "17"; then
 
     if [[ "$os" == "ubuntu" ]]; then
         sudo apt update -y &> /dev/null
-        if ! sudo apt install -y openjdk-17-jdk wget curl &> /dev/null; then
-            echo "APT install failed. Attempting manual Java install..."
+        sudo apt install -y wget curl &> /dev/null
+            
             sudo mkdir -p /opt/java-17 &> /dev/null
             wget https://download.java.net/java/GA/jdk17/0d483333a00540d886896bac774ff48b/35/GPL/openjdk-17_linux-x64_bin.tar.gz &> /dev/null
             sudo tar xf openjdk-17_linux-x64_bin.tar.gz -C /opt/java-17 --strip-components=1 &> /dev/null
             export JAVA_HOME=/opt/java-17
             export PATH=$JAVA_HOME/bin:$PATH
-        fi
+        
 
     elif [[ "$os" == "rhel" ]]; then
         sudo yum update -y &> /dev/null
-        if ! sudo yum install -y java-17-openjdk-devel wget curl &> /dev/null; then
-            echo "YUM install failed. Attempting manual Java install..."
-            sudo mkdir -p /opt/java-17 &> /dev/null
+        sudo yum install -y wget curl &> /dev/null
+        
+            sudo mkdir /opt/java-17 &> /dev/null
             wget https://download.java.net/java/GA/jdk17/0d483333a00540d886896bac774ff48b/35/GPL/openjdk-17_linux-x64_bin.tar.gz &> /dev/null
             sudo tar xf openjdk-17_linux-x64_bin.tar.gz -C /opt/java-17 --strip-components=1 &> /dev/null
             export JAVA_HOME=/opt/java-17
             export PATH=$JAVA_HOME/bin:$PATH
-        fi
+        
 
     else
         echo "Unsupported OS. Exiting."

@@ -10,18 +10,61 @@ get_tomcat_port() {
     grep 'Connector port' /opt/tomcat/conf/server.xml | grep 'protocol="HTTP/1.1"' | grep -o 'port="[0-9]*"' | sed 's/port="\([0-9]*\)"/\1/'
 }
 
-# Fuction to get the public IP address
+# Function to get the public IP address
 get_public_ip() {
     curl -s http://checkip.amazonaws.com
 }
 
-# Check if Java is installed
+# Detect OS (Ubuntu/Debian or RHEL/CentOS)
+detect_os() {
+    if [ -f /etc/os-release ]; then
+        . /etc/os-release
+        if [[ "$ID" == "ubuntu" || "$ID" == "debian" ]]; then
+            echo "ubuntu"
+        elif [[ "$ID" == "rhel" || "$ID" == "centos" || "$ID_LIKE" == *"rhel"* ]]; then
+            echo "rhel"
+        else
+            echo "unsupported"
+        fi
+    else
+        echo "unsupported"
+    fi
+}
+
+# Check and install Java 17, wget, curl
+os=$(detect_os)
+
 if ! java -version 2>&1 | grep -q "17"; then
     echo "Checking if Java OpenJDK 17 is installed. Please wait..."
-    sudo yum update -y &> /dev/null
-    if ! sudo yum install java-17-openjdk-devel -y &> /dev/null; then
-        sudo yum install wget -y &> /dev/null;sudo mkdir /opt/java-17 &> /dev/null; wget https://download.java.net/java/GA/jdk17/0d483333a00540d886896bac774ff48b/35/GPL/openjdk-17_linux-x64_bin.tar.gz &> /dev/null;sudo tar xf openjdk-17_linux-x64_bin.tar.gz -C /opt/java-17/ --strip-components=1 &> /dev/null;export JAVA_HOME=/opt/java-17 &> /dev/null;export PATH=$JAVA_HOME/bin:$PATH &> /dev/null;echo "Java openJDK 17 is installed now. Initiating Tomcat installation. Please wait..."
+
+    if [[ "$os" == "ubuntu" ]]; then
+        sudo apt update -y &> /dev/null
+        if ! sudo apt install -y openjdk-17-jdk wget curl &> /dev/null; then
+            echo "APT install failed. Attempting manual Java install..."
+            sudo mkdir -p /opt/java-17 &> /dev/null
+            wget https://download.java.net/java/GA/jdk17/0d483333a00540d886896bac774ff48b/35/GPL/openjdk-17_linux-x64_bin.tar.gz &> /dev/null
+            sudo tar xf openjdk-17_linux-x64_bin.tar.gz -C /opt/java-17 --strip-components=1 &> /dev/null
+            export JAVA_HOME=/opt/java-17
+            export PATH=$JAVA_HOME/bin:$PATH
+        fi
+
+    elif [[ "$os" == "rhel" ]]; then
+        sudo yum update -y &> /dev/null
+        if ! sudo yum install -y java-17-openjdk-devel wget curl &> /dev/null; then
+            echo "YUM install failed. Attempting manual Java install..."
+            sudo mkdir -p /opt/java-17 &> /dev/null
+            wget https://download.java.net/java/GA/jdk17/0d483333a00540d886896bac774ff48b/35/GPL/openjdk-17_linux-x64_bin.tar.gz &> /dev/null
+            sudo tar xf openjdk-17_linux-x64_bin.tar.gz -C /opt/java-17 --strip-components=1 &> /dev/null
+            export JAVA_HOME=/opt/java-17
+            export PATH=$JAVA_HOME/bin:$PATH
+        fi
+
+    else
+        echo "Unsupported OS. Exiting."
+        exit 1
     fi
+
+    echo "Java OpenJDK 17 is now installed. Initiating Tomcat installation. Please wait..."
 else
     echo "Java 17 is already installed." &> /dev/null
 fi

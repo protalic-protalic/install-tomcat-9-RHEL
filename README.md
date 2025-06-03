@@ -6,6 +6,7 @@ This is script for installing Tomcat 9 in your Redhat machine with manager and h
 
 ----------------------------------------------------------------------------------------------------------------------------------- 
 For Ubuntu/Debian:
+
 **cd;git clone https://github.com/protalic-speaks/install-tomcat-9.git &> /dev/null;cd install-tomcat-9;bash tomcat.sh**
 
 ----------------------------------------------------------------------------------------------------------------------------------- 

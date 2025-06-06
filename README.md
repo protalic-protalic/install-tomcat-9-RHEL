@@ -9,32 +9,37 @@ This is script for installing Tomcat 9 in your machine with manager and host-man
 
 This script supports many distributions such as:
 
-✅ APT-based Distributions:
-    * Ubuntu
-    * Debian
-    * Linux Mint
-    * Kali Linux
-    * Pop!_OS
-    * Zorin OS
-    * elementary OS
+✅ **APT-based Distributions:**
 
-✅ DNF/YUM/RPM-based Distributions:
-    * Red Hat Enterprise Linux (RHEL)
-    * CentOS
-    * Fedora
-    * Rocky Linux
-    * AlmaLinux
-    * Amazon Linux (amzn) — supports both yum and dnf          
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Ubuntu  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Debian  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Linux Mint  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Kali Linux  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Pop!_OS  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Zorin OS  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* elementary OS  
 
-✅ APK-based Distribution:
-    * Alpine Linux    
+✅ **DNF/YUM/RPM-based Distributions:**
 
-✅ ZYPPER-based Distributions:
-    * openSUSE
-    * SUSE Linux Enterprise Server (SLES)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Red Hat Enterprise Linux (RHEL)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* CentOS  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Fedora  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Rocky Linux  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* AlmaLinux  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Amazon Linux (`amzn`) — supports both `yum` and `dnf`  
+
+✅ **APK-based Distribution:**
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Alpine Linux  
+
+✅ **ZYPPER-based Distributions:**
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* openSUSE  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* SUSE Linux Enterprise Server (SLES)  
           
       
-**-----------------------------------------------------------------------------------------------------------------------------------**
+**-----------------------------------------------------------------------------------------------------------------------------------**  
+
 Logins for manager and Hostmanager is:
 
 **User: admin**

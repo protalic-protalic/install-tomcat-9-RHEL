@@ -8,26 +8,30 @@ This is script for installing Tomcat 9 in your machine with manager and host-man
 **bash tomcat.sh**
 
 This script supports many distributions such as:
-    ✅ APT-based Distributions:
-          * Ubuntu
-          * Debian
-          * Linux Mint
-          * Kali Linux
-          * Pop!_OS
-          * Zorin OS
-          * elementary OS
-<br>✅ DNF/YUM/RPM-based Distributions:
-          * Red Hat Enterprise Linux (RHEL)
-          * CentOS
-          * Fedora
-          * Rocky Linux
-          * AlmaLinux
-          * Amazon Linux (amzn) — supports both yum and dnf          
-<br>✅ APK-based Distribution:
-          * Alpine Linux    
-<br>✅ ZYPPER-based Distributions:
-          * openSUSE
-          * SUSE Linux Enterprise Server (SLES)
+
+✅ APT-based Distributions:
+    * Ubuntu
+    * Debian
+    * Linux Mint
+    * Kali Linux
+    * Pop!_OS
+    * Zorin OS
+    * elementary OS
+
+✅ DNF/YUM/RPM-based Distributions:
+    * Red Hat Enterprise Linux (RHEL)
+    * CentOS
+    * Fedora
+    * Rocky Linux
+    * AlmaLinux
+    * Amazon Linux (amzn) — supports both yum and dnf          
+
+✅ APK-based Distribution:
+    * Alpine Linux    
+
+✅ ZYPPER-based Distributions:
+    * openSUSE
+    * SUSE Linux Enterprise Server (SLES)
           
       
 **-----------------------------------------------------------------------------------------------------------------------------------**

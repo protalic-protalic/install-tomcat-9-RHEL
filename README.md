@@ -16,21 +16,19 @@ This script supports many distributions such as:
           * Pop!_OS
           * Zorin OS
           * elementary OS
-
-    ✅ DNF/YUM/RPM-based Distributions:
+<br>✅ DNF/YUM/RPM-based Distributions:
           * Red Hat Enterprise Linux (RHEL)
           * CentOS
           * Fedora
           * Rocky Linux
           * AlmaLinux
-          * Amazon Linux (amzn) — supports both yum and dnf
-          
-    ✅ APK-based Distribution:
-          * Alpine Linux
-    
-    ✅ ZYPPER-based Distributions:
+          * Amazon Linux (amzn) — supports both yum and dnf          
+<br>✅ APK-based Distribution:
+          * Alpine Linux    
+<br>✅ ZYPPER-based Distributions:
           * openSUSE
           * SUSE Linux Enterprise Server (SLES)
+          
       
 **-----------------------------------------------------------------------------------------------------------------------------------**
 Logins for manager and Hostmanager is:

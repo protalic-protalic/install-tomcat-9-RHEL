@@ -125,13 +125,25 @@ if [ ! -d "/opt/tomcat" ]; then
     sudo chmod -R 755 /opt/tomcat
 
     # Prompt for port selection
-    read -p "Enter port for Tomcat (8080 or 9050): " port
-    if [[ "$port" != "8080" && "$port" != "9050" ]]; then
-        echo "Invalid port. Defaulting to 8080."
-        port=8080
+    while true; do
+    read -p "Enter port for Tomcat: " port
+    if [[ "$port" =~ ^[0-9]+$ && "$port" -ge 1024 && "$port" -le 65535 ]]; then
+        if ! sudo lsof -iTCP:$port -sTCP:LISTEN >/dev/null; then
+            break  # Port is available and valid, proceed silently
+        else
+            process_info=$(sudo lsof -iTCP:$port -sTCP:LISTEN | awk 'NR==2 {print $1, "with PID", $2}')
+            if echo "$process_info" | grep -qi 'tomcat'; then
+                echo "Port $port is already used by an existing Tomcat instance ($process_info)."
+            else
+                echo "Port $port is in use by another service ($process_info)."
+            fi
+            echo "Please choose a different port."
+        fi
     else
-        echo "Updated the port for Tomcat to: $port"
+        echo "Invalid port. Please enter a number between 1024 and 65535."
     fi
+done
+
 
     sudo sed -i "s/port=\"8080\"/port=\"$port\"/" /opt/tomcat/conf/server.xml
 
@@ -156,24 +168,38 @@ else
 
 
     while true; do
-        read -p "Do you want to change the port? (yes/no): " change_port
-        if [[ "$change_port" == "yes" ]]; then
-            read -p "Enter new port for Tomcat (8080 or 9050): " new_port
-            if [[ "$new_port" != "8080" && "$new_port" != "9050" ]]; then
-                echo "Invalid port. Keeping the current port: $port."
+    read -p "Do you want to change the port? (yes/no): " change_port
+    if [[ "$change_port" == "yes" ]]; then
+        while true; do
+            read -p "Enter new port for Tomcat (1024–65535): " new_port
+            if [[ "$new_port" =~ ^[0-9]+$ && "$new_port" -ge 1024 && "$new_port" -le 65535 ]]; then
+                if ! sudo lsof -iTCP:$new_port -sTCP:LISTEN >/dev/null; then
+                    sudo sed -i "s/port=\"$port\"/port=\"$new_port\"/" /opt/tomcat/conf/server.xml
+                    sudo systemctl restart tomcat
+                    port=$new_port
+                    echo "Port successfully changed to: $port and Tomcat restarted."
+                    break 2  # exit both inner and outer loops
+                else
+                    process_info=$(sudo lsof -iTCP:$new_port -sTCP:LISTEN | awk 'NR==2 {print $1, "with PID", $2}')
+                    if echo "$process_info" | grep -qi 'tomcat'; then
+                        echo "Port $new_port is already used by an existing Tomcat instance ($process_info)."
+                    else
+                        echo "Port $new_port is in use by another service ($process_info)."
+                    fi
+                    echo "Please enter a different port."
+                fi
             else
-                sudo sed -i "s/port=\"$port\"/port=\"$new_port\"/" /opt/tomcat/conf/server.xml
-                sudo systemctl restart tomcat
-                port=$new_port
-                echo "Port changed to: $port and Tomcat restarted."
+                echo "Invalid port. Please enter a number between 1024 and 65535."
             fi
-            break
-        elif [[ "$change_port" == "no" ]]; then
-            break
-        else
-            echo "Invalid response! Please enter 'yes' or 'no'."
-        fi
-    done
+        done
+    elif [[ "$change_port" == "no" ]]; then
+        break
+    else
+        echo "Invalid response! Please enter 'yes' or 'no'."
+    fi
+done
+
+
 
     
     # Save the current directory

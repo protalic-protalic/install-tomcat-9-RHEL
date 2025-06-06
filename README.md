@@ -1,6 +1,6 @@
 # Install Tomcat 9 on Linux Machine
 
-This is a script for installing Tomcat 9 on your machine with the manager and host-manager apps enabled. It also lets you install Tomcat on a desired port.
+This is a script for installing Tomcat 9 on your linux machine with the manager and host-manager apps enabled. It also lets you install Tomcat on a desired port.
 
 You can just run the following commands to install Tomcat automatically:
 

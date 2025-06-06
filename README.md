@@ -1,11 +1,15 @@
 # install-tomcat-9
 
-This is script for installing Tomcat 9 in your machine with manager and host-manager enabled and it will let you install tomcat on desired port. You can just run the below command to install tomcat automatically.
+This is a script for installing Tomcat 9 on your machine with the manager and host-manager apps enabled. It also lets you install Tomcat on a desired port.
 
+You can just run the following commands to install Tomcat automatically:
 
-**git clone https://github.com/protalic-speaks/install-tomcat-9.git**
-**cd install-tomcat-9**
-**bash tomcat.sh**
+```bash
+git clone https://github.com/protalic-speaks/install-tomcat-9.git
+cd install-tomcat-9
+bash tomcat.sh
+```
+
 
 This script supports many distributions such as:
 
@@ -42,6 +46,5 @@ This script supports many distributions such as:
 
 Logins for manager and Hostmanager is:
 
-**User: admin**
-
-**Password: admin**
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;User: **admin**  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Password: **admin**  

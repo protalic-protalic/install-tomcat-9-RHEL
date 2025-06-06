@@ -23,7 +23,7 @@ detect_os() {
             ubuntu|debian|linuxmint|kali|pop|zorin|elementary)
                 echo "apt"
                 ;;
-            rhel|centos|rocky|almalinux|fedora)
+            rhel|centos|rocky|almalinux|fedora|amzn)
                 if command -v dnf >/dev/null 2>&1; then
                     echo "dnf"
                 elif command -v yum >/dev/null 2>&1; then
@@ -33,6 +33,9 @@ detect_os() {
                 else
                     echo "unsupported"
                 fi
+                ;;
+            opensuse|sles)
+                echo "zypper"
                 ;;
             alpine)
                 echo "apk"
@@ -74,6 +77,10 @@ if ! java -version 2>&1 | grep -q "17"; then
             sudo apk update &> /dev/null
             sudo apk add wget curl tar &> /dev/null
             ;;
+        zypper)
+            sudo zypper refresh &> /dev/null
+            sudo zypper install -y wget curl tar gzip &> /dev/null
+            ;;
         rpm)
             echo "RPM-only system detected. Please manually ensure wget and curl are installed."
             ;;
@@ -93,6 +100,7 @@ if ! java -version 2>&1 | grep -q "17"; then
 else
     echo "Java 17 is already installed." &> /dev/null
 fi
+
 # Check if Tomcat is installed
 if [ ! -d "/opt/tomcat" ]; then
     echo "Tomcat is not installed. Installing Tomcat..."

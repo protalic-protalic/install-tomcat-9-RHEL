@@ -15,60 +15,84 @@ get_public_ip() {
     curl -s http://checkip.amazonaws.com
 }
 
-# Detect OS (Ubuntu/Debian or RHEL/CentOS)
+# Detect Linux distribution and package manager
 detect_os() {
     if [ -f /etc/os-release ]; then
         . /etc/os-release
-        if [[ "$ID" == "ubuntu" || "$ID" == "debian" ]]; then
-            echo "ubuntu"
-        elif [[ "$ID" == "rhel" || "$ID" == "centos" || "$ID_LIKE" == *"rhel"* ]]; then
-            echo "rhel"
-        else
-            echo "unsupported"
-        fi
+        case "$ID" in
+            ubuntu|debian|linuxmint|kali|pop|zorin|elementary)
+                echo "apt"
+                ;;
+            rhel|centos|rocky|almalinux|fedora)
+                if command -v dnf >/dev/null 2>&1; then
+                    echo "dnf"
+                elif command -v yum >/dev/null 2>&1; then
+                    echo "yum"
+                elif command -v rpm >/dev/null 2>&1; then
+                    echo "rpm"
+                else
+                    echo "unsupported"
+                fi
+                ;;
+            alpine)
+                echo "apk"
+                ;;
+            *)
+                echo "unsupported"
+                ;;
+        esac
     else
         echo "unsupported"
     fi
 }
 
-# Check and install Java 17, wget, curl
 os=$(detect_os)
 
+if [ "$os" = "unsupported" ]; then
+    echo "Unsupported or unrecognized operating system. Exiting."
+    exit 1
+fi
+
+# Check and install Java 17 if not installed
 if ! java -version 2>&1 | grep -q "17"; then
     echo "Checking if Java OpenJDK 17 is installed. Please wait..."
 
-    if [[ "$os" == "ubuntu" ]]; then
-        sudo apt update -y &> /dev/null
-        sudo apt install -y wget curl &> /dev/null
-            
-            sudo mkdir -p /opt/java-17 &> /dev/null
-            wget https://download.java.net/java/GA/jdk17/0d483333a00540d886896bac774ff48b/35/GPL/openjdk-17_linux-x64_bin.tar.gz &> /dev/null
-            sudo tar xf openjdk-17_linux-x64_bin.tar.gz -C /opt/java-17 --strip-components=1 &> /dev/null
-            export JAVA_HOME=/opt/java-17
-            export PATH=$JAVA_HOME/bin:$PATH
-        
+    case "$os" in
+        apt)
+            sudo apt update -y &> /dev/null
+            sudo apt install -y wget curl &> /dev/null
+            ;;
+        dnf)
+            sudo dnf update -y &> /dev/null
+            sudo dnf install -y wget curl &> /dev/null
+            ;;
+        yum)
+            sudo yum update -y &> /dev/null
+            sudo yum install -y wget curl &> /dev/null
+            ;;
+        apk)
+            sudo apk update &> /dev/null
+            sudo apk add wget curl tar &> /dev/null
+            ;;
+        rpm)
+            echo "RPM-only system detected. Please manually ensure wget and curl are installed."
+            ;;
+        *)
+            echo "Unsupported OS for package installation. Exiting."
+            exit 1
+            ;;
+    esac
 
-    elif [[ "$os" == "rhel" ]]; then
-        sudo yum update -y &> /dev/null
-        sudo yum install -y wget curl &> /dev/null
-        
-            sudo mkdir /opt/java-17 &> /dev/null
-            wget https://download.java.net/java/GA/jdk17/0d483333a00540d886896bac774ff48b/35/GPL/openjdk-17_linux-x64_bin.tar.gz &> /dev/null
-            sudo tar xf openjdk-17_linux-x64_bin.tar.gz -C /opt/java-17 --strip-components=1 &> /dev/null
-            export JAVA_HOME=/opt/java-17
-            export PATH=$JAVA_HOME/bin:$PATH
-        
-
-    else
-        echo "Unsupported OS. Exiting."
-        exit 1
-    fi
+    sudo mkdir -p /opt/java-17 &> /dev/null
+    wget https://download.java.net/java/GA/jdk17/0d483333a00540d886896bac774ff48b/35/GPL/openjdk-17_linux-x64_bin.tar.gz &> /dev/null
+    sudo tar xf openjdk-17_linux-x64_bin.tar.gz -C /opt/java-17 --strip-components=1 &> /dev/null
+    export JAVA_HOME=/opt/java-17
+    export PATH=$JAVA_HOME/bin:$PATH
 
     echo "Java OpenJDK 17 is now installed. Initiating Tomcat installation. Please wait..."
 else
     echo "Java 17 is already installed." &> /dev/null
 fi
-
 # Check if Tomcat is installed
 if [ ! -d "/opt/tomcat" ]; then
     echo "Tomcat is not installed. Installing Tomcat..."

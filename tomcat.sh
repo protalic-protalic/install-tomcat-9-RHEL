@@ -111,9 +111,9 @@ if [ -d "/opt/tomcat" ]; then
     echo "What would you like to do?"
     echo "1) Remove Tomcat completely (no reinstallation)"
     echo "2) Remove and install Tomcat freshly"
-    echo "3) Keep the existing installation (no changes)"
+    echo "3) Keep the existing installation (choose this, if you only want to update the desired port without modifying the current setup.)"
     echo ""
-    echo "Note: This script won't fix broken or manually-installed Tomcat setups."
+    echo "Note: This script won't fix broken or manually-installed Tomcat setups, as it isn't built for troubleshooting."
     read -p "Enter your choice [1/2/3]: " choice
 
     case "$choice" in
